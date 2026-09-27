@@ -1,0 +1,176 @@
+.guestInformation {
+    box-sizing: border-box;
+    border: 2px solid #f40d0d;
+    width: 90vw;
+    height: 50vh;
+    text-align: center;
+    display: flex;
+    margin: 0 auto;
+}
+
+
+.leftSection {
+    box-sizing: border-box;
+    border: 2px solid #1976d2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px 40px;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-radius: 12px;
+}
+.leftSection h1 {
+    margin: 0 0 20px 0;
+    font-size: 28px;
+    color: #1565c0;
+}
+.leftSection ul{
+    text-align: left;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.leftSection li {
+    position: relative;
+    padding: 10px 0 10px 28px;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.5;
+}
+.leftSection li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #1976d2;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+
+.rightSection {
+    box-sizing: border-box;
+    border: 2px solid #00ff0d;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: 32px;
+    background: linear-gradient(135deg, #f0fff4 0%, #e8f5e9 100%);
+    border-radius: 12px;
+}
+.rightSection h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #2e7d32;
+}
+.rightSection p {
+    margin: 0;
+    font-size: 15px;
+    color: #555;
+    max-width: 280px;
+    line-height: 1.5;
+}
+.loginButton {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 48px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #2e7d32;
+    color: #fff;
+    transition: background-color 0.2s;
+}
+.loginButton:hover {
+    background-color: #1b5e20;
+}
+.registerButton {
+    border: 2px solid #2e7d32;
+    border-radius: 8px;
+    padding: 12px 48px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: transparent;
+    color: #2e7d32;
+    transition: background-color 0.2s, color 0.2s;
+}
+.registerButton:hover {
+    background-color: #2e7d32;
+    color: #fff;
+}
+
+/* ── Form styles ── */
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.formTitle {
+    margin: 0;
+    font-size: 24px;
+    color: #2e7d32;
+}
+
+.input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #c8e6c9;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+.input:focus {
+    border-color: #2e7d32;
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #2e7d32;
+    color: #fff;
+    transition: background-color 0.2s;
+}
+.submitBtn:hover {
+    background-color: #1b5e20;
+}
+
+.backLink {
+    background: none;
+    border: none;
+    color: #777;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px 0;
+}
+.backLink:hover {
+    color: #333;
+}
+
+.switchLink {
+    margin: 0;
+    font-size: 13px;
+    color: #777;
+}
+.switchLink span {
+    color: #2e7d32;
+    cursor: pointer;
+    font-weight: 600;
+}
+.switchLink span:hover {
+    text-decoration: underline;
+}

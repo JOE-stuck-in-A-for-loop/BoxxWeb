@@ -1,0 +1,62 @@
+React Knowledge Summary
+========================
+
+1. useState — 状态变量
+------------------------
+Syntax:  const [变量名, set变量名] = useState('默认值');
+
+- useState creates a variable AND a function to change it.
+- Call set变量名('新值') to update the variable.
+- When the variable changes, React re-renders the component.
+
+Example:
+    const [view, setView] = useState('default');
+    // view = 'default'  initially
+    setView('login');   // now view = 'login'
+    setView('register');// now view = 'register'
+
+
+2. Conditional Rendering: {condition && (JSX)}
+------------------------------------------------
+In JSX, { } lets you write JavaScript expressions.
+
+    {view === 'login' && <div>show this div</div>}
+
+How it works:
+    - view === 'login'  is a comparison → returns true or false
+    - true  && <div>  → JavaScript AND returns the <div> (it renders)
+    - false && <div>  → JavaScript AND returns false (nothing renders)
+
+Meaning: "Only show this JSX if the condition is true"
+
+=== is "strictly equal" (checks value AND type).
+== is loose equality — avoid it, always use ===.
+
+
+3. Quotes: "" vs '' vs ``
+-----------------------------
+In JavaScript, "" and '' are THE SAME — no difference.
+
+Common convention:
+    '' (single quotes)  → JavaScript strings
+        const view = 'login';
+
+    "" (double quotes)  → JSX attributes
+        <input placeholder="Username" type="text" />
+
+    `` (backticks)      → Template strings (can embed variables)
+        const msg = `Hello, ${name}!`;
+
+Be consistent. This project uses:
+    - '' for JS strings
+    - "" for JSX attributes
+
+
+4. onClick Pattern
+-------------------
+    <button onClick={() => setView('login')}>Login</button>
+
+    - onClick expects a FUNCTION
+    - () => setView('login') is an arrow function
+    - The arrow function runs when the button is clicked
+    - Don't write: onClick={setView('login')}  → that calls it immediately!
