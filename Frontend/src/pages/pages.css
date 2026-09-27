@@ -1,0 +1,46 @@
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.page-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.page-card h1 {
+    margin: 0 0 16px 0;
+    font-size: 32px;
+    color: #333;
+}
+
+.page-placeholder {
+    margin: 0 0 32px 0;
+    font-size: 16px;
+    color: #777;
+    line-height: 1.6;
+}
+
+.back-btn {
+    padding: 12px 36px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    transition: opacity 0.2s;
+}
+.back-btn:hover {
+    opacity: 0.85;
+}
