@@ -174,3 +174,15 @@
 .switchLink span:hover {
     text-decoration: underline;
 }
+
+.errorMsg {
+    color: #d32f2f;
+    font-size: 13px;
+    margin: 0;
+    padding: 6px 12px;
+    background: #ffebee;
+    border-radius: 6px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
