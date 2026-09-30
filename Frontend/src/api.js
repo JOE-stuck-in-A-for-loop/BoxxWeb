@@ -41,10 +41,10 @@ async function request(url, options = {}) {
 /**
  * 注册新用户
  */
-export function register(username, password) {
+export function register(username, password, idNumber) {
   return request('/register', {
     method: 'POST',
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, id_number: idNumber }),
   });
 }
 

@@ -37,9 +37,9 @@ export function AuthProvider({ children }) {
     return userData;
   }, []);
 
-  const register = useCallback(async (username, password) => {
+  const register = useCallback(async (username, password, idNumber) => {
     // 先注册
-    await apiRegister(username, password);
+    await apiRegister(username, password, idNumber);
     // 注册成功后自动登录
     await login(username, password);
   }, [login]);

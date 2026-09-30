@@ -10,6 +10,7 @@ function GuestInformation() {
     // 表单字段
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [idNumber, setIdNumber] = useState('');
     const [error, setError] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
@@ -18,6 +19,7 @@ function GuestInformation() {
         setView(newView);
         setUsername('');
         setPassword('');
+        setIdNumber('');
         setError('');
     }
 
@@ -61,8 +63,8 @@ function GuestInformation() {
 
     async function handleRegister(e) {
         e.preventDefault();
-        if (!username.trim() || !password.trim()) {
-            setError('请填写用户名和密码');
+        if (!username.trim() || !password.trim() || !idNumber.trim()) {
+            setError('请填写用户名、密码和身份证号');
             return;
         }
         if (password.length < 4) {
@@ -72,7 +74,7 @@ function GuestInformation() {
         setSubmitting(true);
         setError('');
         try {
-            await register(username, password);
+            await register(username, password, idNumber);
             // 注册成功 → 自动登录 → isAuthenticated 变为 true
         } catch (err) {
             if (err.status === 400) {
@@ -157,6 +159,14 @@ function GuestInformation() {
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            disabled={submitting}
+                        />
+                        <input
+                            className={styles.input}
+                            type="text"
+                            placeholder="ID Card Number"
+                            value={idNumber}
+                            onChange={(e) => setIdNumber(e.target.value)}
                             disabled={submitting}
                         />
                         {error && <p className={styles.errorMsg}>{error}</p>}
