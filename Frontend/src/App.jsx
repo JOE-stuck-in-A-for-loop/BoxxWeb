@@ -20,22 +20,23 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={
-        <>
-          <Background />
-          <main className="content-layer">
+    <Background>
+      <Routes>
+        <Route path="/" element={
+          <>
             <Greetings />
-            <GuestInformation />
-            <HomeOptions />
-          </main>
-        </>
-      } />
-      <Route path="/feed" element={<FeedPage />} />
-      <Route path="/chat" element={<ChatPage />} />
-      <Route path="/justify" element={<JustifyPage />} />
-      <Route path="/explore" element={<ExplorePage />} />
-    </Routes>
+            <main className="content-layer">
+              <GuestInformation />
+              <HomeOptions />
+            </main>
+          </>
+        } />
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/justify" element={<JustifyPage />} />
+        <Route path="/explore" element={<ExplorePage />} />
+      </Routes>
+    </Background>
   );
 }
 

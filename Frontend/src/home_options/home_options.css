@@ -7,6 +7,7 @@
     border: #2ecc71 solid 3px;
     width: 100vw;
     height: 40vh;
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .opt-btn {
