@@ -15,7 +15,11 @@ def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = pwd_context.hash(user.password)
     
     # 2. Create a new SQLAlchemy User object (leaving out the plain password)
-    db_user = models.User(username=user.username, hashed_password=hashed_password)
+    db_user = models.User(
+        username=user.username,
+        hashed_password=hashed_password,
+        id_number=user.id_number
+    )
     
     # 3. Add the new user to the database session
     db.add(db_user)
