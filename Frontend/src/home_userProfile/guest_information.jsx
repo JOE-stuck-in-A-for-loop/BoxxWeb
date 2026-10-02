@@ -34,9 +34,15 @@ function GuestInformation() {
         );
     }
 
-    // 如果已登录，直接显示 UserProfile
+    // 如果已登录，直接显示 UserProfile（保持同样的容器尺寸）
     if (isAuthenticated) {
-        return <UserProfile />;
+        return (
+            <div id="guestInformation" className={styles.guestInformation}>
+                <div className={styles.rightSection}>
+                    <UserProfile />
+                </div>
+            </div>
+        );
     }
 
     async function handleLogin(e) {
@@ -90,13 +96,36 @@ function GuestInformation() {
     return (
         <div id="guestInformation" className={styles.guestInformation}>
             <div className={styles.leftSection}>
-                <h1>Guests need to know</h1>
-                <ul>
-                    <li>You can totally browse all posts, articles, etc.</li>
-                    <li>To post or comment on existing content, you need to be logged in</li>
-                    <li>To utilize the Chat feature, you need to be logged in</li>
-                    <li>Besides logging in, you also need identity verification</li>
-                </ul>
+                {view === 'default' && (
+                    <>
+                        <h1>Guests need to know</h1>
+                        <ul>
+                            <li>You can totally browse all posts, articles, etc.</li>
+                            <li>To post or comment on existing content, you need to be logged in</li>
+                            <li>To utilize the Chat feature, you need to be logged in</li>
+                            <li>Besides logging in, you also need identity verification</li>
+                        </ul>
+                    </>
+                )}
+                {view === 'login' && (
+                    <>
+                        <h1>Login Rules</h1>
+                        <ul>
+                            <li><strong>Username</strong> — required, cannot be empty</li>
+                            <li><strong>Password</strong> — required, cannot be empty</li>
+                        </ul>
+                    </>
+                )}
+                {view === 'register' && (
+                    <>
+                        <h1>Registration Rules</h1>
+                        <ul>
+                            <li><strong>Username</strong> — required, cannot be empty</li>
+                            <li><strong>Password</strong> — required, at least 4 characters</li>
+                            <li><strong>ID Card Number</strong> — required, cannot be empty</li>
+                        </ul>
+                    </>
+                )}
             </div>
 
             <div className={styles.rightSection}>
