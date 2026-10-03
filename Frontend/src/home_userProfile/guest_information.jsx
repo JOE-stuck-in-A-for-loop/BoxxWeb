@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useAuth } from '../AuthContext';
+import { useI18n } from '../i18n';
 import UserProfile from './userProfile';
 import styles from './guest_information.module.css';
 
 function GuestInformation() {
     const { user, isAuthenticated, login, register, loading } = useAuth();
+    const { t } = useI18n();
     const [view, setView] = useState('default');
 
     // 表单字段
@@ -28,7 +30,7 @@ function GuestInformation() {
         return (
             <div id="guestInformation" className={styles.guestInformation}>
                 <div className={styles.rightSection}>
-                    <p>加载中...</p>
+                    <p>{t('guestInfo.form.loading')}</p>
                 </div>
             </div>
         );
@@ -48,7 +50,7 @@ function GuestInformation() {
     async function handleLogin(e) {
         e.preventDefault();
         if (!username.trim() || !password.trim()) {
-            setError('请填写用户名和密码');
+            setError(t('guestInfo.errors.fillFields'));
             return;
         }
         setSubmitting(true);
@@ -58,9 +60,9 @@ function GuestInformation() {
             // 登录成功 → isAuthenticated 变为 true，组件自动显示 UserProfile
         } catch (err) {
             if (err.status === 401) {
-                setError('用户名或密码错误');
+                setError(t('guestInfo.errors.invalidCredentials'));
             } else {
-                setError(err.message || '登录失败，请稍后重试');
+                setError(err.message || t('guestInfo.errors.loginFailed'));
             }
         } finally {
             setSubmitting(false);
@@ -70,11 +72,11 @@ function GuestInformation() {
     async function handleRegister(e) {
         e.preventDefault();
         if (!username.trim() || !password.trim() || !idNumber.trim()) {
-            setError('请填写用户名、密码和身份证号');
+            setError(t('guestInfo.errors.fillAll'));
             return;
         }
         if (password.length < 4) {
-            setError('密码至少 4 位');
+            setError(t('guestInfo.errors.passwordShort'));
             return;
         }
         setSubmitting(true);
@@ -84,9 +86,9 @@ function GuestInformation() {
             // 注册成功 → 自动登录 → isAuthenticated 变为 true
         } catch (err) {
             if (err.status === 400) {
-                setError('用户名已存在');
+                setError(t('guestInfo.errors.usernameTaken'));
             } else {
-                setError(err.message || '注册失败，请稍后重试');
+                setError(err.message || t('guestInfo.errors.registerFailed'));
             }
         } finally {
             setSubmitting(false);
@@ -98,31 +100,31 @@ function GuestInformation() {
             <div className={styles.leftSection}>
                 {view === 'default' && (
                     <>
-                        <h1>Guests need to know</h1>
+                        <h1>{t('guestInfo.title')}</h1>
                         <ul>
-                            <li>You can totally browse all posts, articles, etc.</li>
-                            <li>To post or comment on existing content, you need to be logged in</li>
-                            <li>To utilize the Chat feature, you need to be logged in</li>
-                            <li>Besides logging in, you also need identity verification</li>
+                            {t('guestInfo.rules').map((rule, i) => (
+                                <li key={i}>{rule}</li>
+                            ))}
                         </ul>
                     </>
                 )}
                 {view === 'login' && (
                     <>
-                        <h1>Login Rules</h1>
+                        <h1>{t('guestInfo.loginRulesTitle')}</h1>
                         <ul>
-                            <li><strong>Username</strong> — required, cannot be empty</li>
-                            <li><strong>Password</strong> — required, cannot be empty</li>
+                            {t('guestInfo.loginRules').map((rule, i) => (
+                                <li key={i} dangerouslySetInnerHTML={{ __html: rule }} />
+                            ))}
                         </ul>
                     </>
                 )}
                 {view === 'register' && (
                     <>
-                        <h1>Registration Rules</h1>
+                        <h1>{t('guestInfo.registerRulesTitle')}</h1>
                         <ul>
-                            <li><strong>Username</strong> — required, cannot be empty</li>
-                            <li><strong>Password</strong> — required, at least 4 characters</li>
-                            <li><strong>ID Card Number</strong> — required, cannot be empty</li>
+                            {t('guestInfo.registerRules').map((rule, i) => (
+                                <li key={i} dangerouslySetInnerHTML={{ __html: rule }} />
+                            ))}
                         </ul>
                     </>
                 )}
@@ -131,20 +133,20 @@ function GuestInformation() {
             <div className={styles.rightSection}>
                 {view === 'default' && (
                     <>
-                        <h1>Login or Register</h1>
-                        <p>To access the full features of Boxx, please log in or register for an account.</p>
-                        <button className={styles.loginButton} onClick={() => switchView('login')}>Login</button>
-                        <button className={styles.registerButton} onClick={() => switchView('register')}>Register</button>
+                        <h1>{t('guestInfo.loginTitle')}</h1>
+                        <p>{t('guestInfo.loginDesc')}</p>
+                        <button className={styles.loginButton} onClick={() => switchView('login')}>{t('guestInfo.loginBtn')}</button>
+                        <button className={styles.registerButton} onClick={() => switchView('register')}>{t('guestInfo.registerBtn')}</button>
                     </>
                 )}
 
                 {view === 'login' && (
                     <form className={styles.form} onSubmit={handleLogin}>
-                        <h2 className={styles.formTitle}>Login</h2>
+                        <h2 className={styles.formTitle}>{t('guestInfo.form.loginSubmit')}</h2>
                         <input
                             className={styles.input}
                             type="text"
-                            placeholder="Username"
+                            placeholder={t('guestInfo.form.username')}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             disabled={submitting}
@@ -152,32 +154,32 @@ function GuestInformation() {
                         <input
                             className={styles.input}
                             type="password"
-                            placeholder="Password"
+                            placeholder={t('guestInfo.form.password')}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             disabled={submitting}
                         />
                         {error && <p className={styles.errorMsg}>{error}</p>}
                         <button className={styles.submitBtn} type="submit" disabled={submitting}>
-                            {submitting ? '登录中...' : 'Login'}
+                            {submitting ? t('guestInfo.form.loading') : t('guestInfo.form.loginSubmit')}
                         </button>
                         <button className={styles.backLink} type="button" onClick={() => switchView('default')}>
-                            ← Back
+                            {t('guestInfo.form.back')}
                         </button>
                         <p className={styles.switchLink}>
-                            Don't have an account?{' '}
-                            <span onClick={() => switchView('register')}>Register</span>
+                            {t('guestInfo.form.noAccount')}{' '}
+                            <span onClick={() => switchView('register')}>{t('guestInfo.form.registerHere')}</span>
                         </p>
                     </form>
                 )}
 
                 {view === 'register' && (
                     <form className={styles.form} onSubmit={handleRegister}>
-                        <h2 className={styles.formTitle}>Register</h2>
+                        <h2 className={styles.formTitle}>{t('guestInfo.form.registerSubmit')}</h2>
                         <input
                             className={styles.input}
                             type="text"
-                            placeholder="Username"
+                            placeholder={t('guestInfo.form.username')}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             disabled={submitting}
@@ -185,7 +187,7 @@ function GuestInformation() {
                         <input
                             className={styles.input}
                             type="password"
-                            placeholder="Password"
+                            placeholder={t('guestInfo.form.password')}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             disabled={submitting}
@@ -193,21 +195,21 @@ function GuestInformation() {
                         <input
                             className={styles.input}
                             type="text"
-                            placeholder="ID Card Number"
+                            placeholder={t('guestInfo.form.idNumber')}
                             value={idNumber}
                             onChange={(e) => setIdNumber(e.target.value)}
                             disabled={submitting}
                         />
                         {error && <p className={styles.errorMsg}>{error}</p>}
                         <button className={styles.submitBtn} type="submit" disabled={submitting}>
-                            {submitting ? '注册中...' : 'Register'}
+                            {submitting ? t('guestInfo.form.loading') : t('guestInfo.form.registerSubmit')}
                         </button>
                         <button className={styles.backLink} type="button" onClick={() => switchView('default')}>
-                            ← Back
+                            {t('guestInfo.form.back')}
                         </button>
                         <p className={styles.switchLink}>
-                            Already have an account?{' '}
-                            <span onClick={() => switchView('login')}>Login</span>
+                            {t('guestInfo.form.hasAccount')}{' '}
+                            <span onClick={() => switchView('login')}>{t('guestInfo.form.loginHere')}</span>
                         </p>
                     </form>
                 )}

@@ -5,6 +5,7 @@ import Background from './home_background/background.jsx';
 import Greetings from './home_GreetingText/Greeting.jsx';
 import GuestInformation from './home_userProfile/guest_information.jsx';
 import HomeOptions from './home_options/home_options.jsx';
+import LangSwitcher from './langSwitcher.jsx';
 
 import FeedPage from './pages/FeedPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
@@ -21,6 +22,7 @@ function App() {
 
   return (
     <Background>
+      <LangSwitcher />
       <Routes>
         <Route path="/" element={
           <>
