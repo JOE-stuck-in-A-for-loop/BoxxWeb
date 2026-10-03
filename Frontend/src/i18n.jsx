@@ -19,7 +19,7 @@ export function I18nProvider({ children }) {
     return localStorage.getItem('boxx_locale') || detectLocale();
   });
 
-  const setLocale = useCallback((l) => {
+  const setLocale = useCallback((l) => {  
     localStorage.setItem('boxx_locale', l);
     setLocaleState(l);
   }, []);

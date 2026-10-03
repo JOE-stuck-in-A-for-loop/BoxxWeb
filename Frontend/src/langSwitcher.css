@@ -3,37 +3,73 @@
   top: 16px;
   right: 20px;
   z-index: 100;
+}
+
+.lang-trigger {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(4px);
-  padding: 4px 10px;
-  border-radius: 8px;
-}
-
-.lang-btn {
-  background: none;
-  border: none;
+  border: 1px solid transparent;
   font-size: 13px;
   font-weight: 600;
-  color: #666;
+  color: #1F3A5F;
   cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 4px;
+  padding: 6px 14px;
+  border-radius: 8px;
   transition: all 0.2s;
+  min-width: 80px;
+  justify-content: center;
 }
 
-.lang-btn:hover {
+.lang-trigger:hover {
+  background: rgba(182, 178, 178, 0.95);
+  
+}
+
+.lang-arrow {
+  font-size: 10px;
+  transition: transform 0.2s;
+}
+
+.lang-arrow.up {
+  transform: rotate(180deg);
+}
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  border-radius: 8px;
+  padding: 4px;
+  margin: 0;
+  list-style: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.lang-option {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.lang-option:hover {
+  background: rgba(31, 58, 95, 0.08);
   color: #1F3A5F;
 }
 
-.lang-btn.active {
+.lang-option.active {
   color: #1F3A5F;
   background: rgba(31, 58, 95, 0.1);
-}
-
-.lang-divider {
-  color: #ccc;
-  font-size: 13px;
+  font-weight: 600;
 }

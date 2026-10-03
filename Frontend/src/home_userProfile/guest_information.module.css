@@ -1,6 +1,5 @@
 .guestInformation {
     box-sizing: border-box;
-    border: 2px solid #f40d0d;
     width: 90vw;
     height: 50vh;
     text-align: center;
@@ -11,13 +10,11 @@
 
 .leftSection {
     box-sizing: border-box;
-    border: 2px solid #1976d2;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 32px 40px;
-    background: linear-gradient(135deg, rgba(227, 242, 253, 0.6) 0%, rgba(187, 222, 251, 0.6) 100%);
     border-radius: 12px;
 }
 .leftSection h1 {
@@ -50,7 +47,6 @@
 
 .rightSection {
     box-sizing: border-box;
-    border: 2px solid #00ff0d;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -58,7 +54,6 @@
     align-items: center;
     gap: 16px;
     padding: 32px;
-    background: linear-gradient(135deg, rgba(240, 255, 244, 0.6) 0%, rgba(232, 245, 233, 0.6) 100%);
     border-radius: 12px;
 }
 .rightSection h1 {

@@ -6,7 +6,6 @@ function Greetings() {
 
     //for observion, you can add a style object to define the styles for your component. Here's an example of how you can do that:
     const styleForSloganArea = {
-        border: '1px solid #e40e0e',
         padding: '10px',
         textAlign: 'center',
         height: '10vh',
@@ -14,7 +13,6 @@ function Greetings() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: 'rgba(255, 255, 255, 0.5)',
     }
 
 
