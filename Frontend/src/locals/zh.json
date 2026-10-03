@@ -62,7 +62,7 @@
     },
     "chat": {
       "title": "Chat",
-      "placeholder": "你的消息和群组将在这里显示 — 类似 Discord 的聊天功能。"
+      "placeholder": "你的消息和群组将在这里显示 "
     },
     "justify": {
       "title": "Justify",

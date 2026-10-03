@@ -11,7 +11,7 @@ function JustifyPage() {
             <div className="page-card">
                 <h1>{t('pages.justify.title')}</h1>
                 <p className="page-placeholder">{t('pages.justify.placeholder')}</p>
-                <button className="back-btn" onClick={() => do_navigate('/')}>{t('pages.back')}</button>
+                <button className="back-btn" onClick={() => do_navigate('/')}></button>
             </div>
         </div>
     );

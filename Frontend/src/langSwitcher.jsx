@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useI18n } from './i18n';
 import './langSwitcher.css';
 
@@ -11,6 +12,7 @@ function LangSwitcher() {
   const { locale, setLocale } = useI18n();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const location = useLocation();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -24,6 +26,9 @@ function LangSwitcher() {
     }
     return () => document.removeEventListener('mousedown', handleClick);
   }, [open]);
+
+  // Hide on sub-pages (any page except "/") — must be after all hooks
+  if (location.pathname !== '/') return null;
 
   const current = LANGUAGES.find((l) => l.code === locale) || LANGUAGES[1];
 

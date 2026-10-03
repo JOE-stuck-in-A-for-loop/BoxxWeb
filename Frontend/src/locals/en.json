@@ -62,7 +62,7 @@
     },
     "chat": {
       "title": "Chat",
-      "placeholder": "Your messages and groups will appear here — a mini-Discord style chat."
+      "placeholder": "Your messages and groups will appear here "
     },
     "justify": {
       "title": "Justify",

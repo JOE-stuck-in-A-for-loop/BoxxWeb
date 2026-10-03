@@ -4,6 +4,39 @@
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    position: relative;
+}
+
+.back-btn {
+    position: fixed;
+    top: 16px;
+    left: 20px;
+    z-index: 99;
+    padding: 8px 18px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    color: #1F3A5F;
+    transition: all 0.2s;
+    min-width: 70px;
+    text-align: center;
+}
+
+.back-btn::before {
+    content: "← Back";
+}
+
+.back-btn:hover {
+    border-color: rgba(31, 58, 95, 0.2);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.back-btn:hover::before {
+    content: "Boxx";
 }
 
 .page-card {
@@ -25,19 +58,4 @@
     font-size: 16px;
     color: #777;
     line-height: 1.6;
-}
-
-.back-btn {
-    padding: 12px 36px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    background: linear-gradient(135deg, #667eea, #52fb1a);
-    color: #fff;
-    transition: opacity 0.2s;
-}
-.back-btn:hover {
-    opacity: 0.85;
 }

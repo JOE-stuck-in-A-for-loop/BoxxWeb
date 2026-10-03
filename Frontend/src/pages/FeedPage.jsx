@@ -11,7 +11,7 @@ function FeedPage() {
             <div className="page-card">
                 <h1>{t('pages.feed.title')}</h1>
                 <p className="page-placeholder">{t('pages.feed.placeholder')}</p>
-                <button className="back-btn" onClick={() => do_navigate('/')}>{t('pages.back')}</button>
+                <button className="back-btn" onClick={() => do_navigate('/')}></button>
             </div>
         </div>
     );
