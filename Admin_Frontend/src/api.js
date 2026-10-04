@@ -39,16 +39,6 @@ async function request(url, options = {}) {
 }
 
 /**
- * 注册新用户
- */
-export function register(username, password, idNumber) {
-  return request('/register', {
-    method: 'POST',
-    body: JSON.stringify({ username, password, id_number: idNumber }),
-  });
-}
-
-/**
  * 登录，返回 JWT token
  */
 export function login(username, password) {
@@ -65,4 +55,4 @@ export function getMe() {
   return request('/me');
 }
 
-export default { register, login, getMe };
+export default { login, getMe };

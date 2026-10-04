@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { login as apiLogin, register as apiRegister, getMe } from './api.js';
+import { login as apiLogin, getMe } from './api.js';
 
 const AuthContext = createContext(null);
 
@@ -37,20 +37,13 @@ export function AuthProvider({ children }) {
     return userData;
   }, []);
 
-  const register = useCallback(async (username, password, idNumber) => {
-    // 先注册
-    await apiRegister(username, password, idNumber);
-    // 注册成功后自动登录
-    await login(username, password);
-  }, [login]);
-
   const logout = useCallback(() => {
     localStorage.removeItem('boxx_token');
     setUser(null);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
