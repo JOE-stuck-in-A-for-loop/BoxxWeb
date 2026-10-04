@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Boxx"
+  },
+  "greeting": {
+    "welcome": "Welcome to Boxx"
+  },
+  "guestInfo": {
+    "title": "Guests need to know",
+    "rules": [
+      "You can totally browse all posts, articles, etc.",
+      "To post or comment on existing content, you need to be logged in",
+      "To utilize the Chat feature, you need to be logged in",
+      "Besides logging in, you also need identity verification"
+    ],
+    "loginTitle": "Login or Register",
+    "loginDesc": "To access the full features of Boxx, please log in or register for an account.",
+    "loginBtn": "Login",
+    "registerBtn": "Register",
+    "loginRulesTitle": "Login Rules",
+    "loginRules": [
+      "<strong>Username</strong> — required, cannot be empty",
+      "<strong>Password</strong> — required, cannot be empty"
+    ],
+    "registerRulesTitle": "Registration Rules",
+    "registerRules": [
+      "<strong>Username</strong> — required, cannot be empty",
+      "<strong>Password</strong> — required, at least 4 characters",
+      "<strong>ID Card Number</strong> — required, cannot be empty"
+    ],
+    "form": {
+      "username": "Username",
+      "password": "Password",
+      "idNumber": "ID Card Number",
+      "loginSubmit": "Login",
+      "registerSubmit": "Register",
+      "loading": "Loading...",
+      "back": "← Back",
+      "noAccount": "Don't have an account?",
+      "hasAccount": "Already have an account?",
+      "registerHere": "Register",
+      "loginHere": "Login"
+    },
+    "errors": {
+      "fillFields": "Please fill in username and password",
+      "fillAll": "Please fill in username, password and ID card number",
+      "passwordShort": "Password must be at least 4 characters",
+      "invalidCredentials": "Invalid username or password",
+      "usernameTaken": "Username already exists",
+      "loginFailed": "Login failed, please try again later",
+      "registerFailed": "Registration failed, please try again later"
+    }
+  },
+  "userProfile": {
+    "welcome": "Welcome, {username}!",
+    "logout": "Logout"
+  },
+  "pages": {
+    "feed": {
+      "title": "Feed",
+      "placeholder": "Your feed will appear here — posts, tags, following, and more."
+    },
+    "chat": {
+      "title": "Chat",
+      "placeholder": "Your messages and groups will appear here "
+    },
+    "justify": {
+      "title": "Justify",
+      "placeholder": "Justify section — coming soon."
+    },
+    "explore": {
+      "title": "Explore",
+      "placeholder": "Explore section — discover new content and people."
+    },
+    "back": "← Back to Home"
+  },
+  "navOptions": {
+    "feed": "Feed",
+    "chat": "Chat",
+    "justify": "Justify",
+    "explore": "Explore"
+  }
+}

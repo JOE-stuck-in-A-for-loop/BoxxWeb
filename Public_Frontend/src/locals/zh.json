@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Boxx"
+  },
+  "greeting": {
+    "welcome": "欢迎来到 Boxx"
+  },
+  "guestInfo": {
+    "title": "访客须知",
+    "rules": [
+      "您可以自由浏览所有帖子、文章等内容",
+      "要发布内容或评论，需要先登录",
+      "使用聊天功能需要先登录",
+      "除了登录外，还需要身份验证"
+    ],
+    "loginTitle": "登录或注册",
+    "loginDesc": "要使用 Boxx 的全部功能，请登录或注册一个账号。",
+    "loginBtn": "登录",
+    "registerBtn": "注册",
+    "loginRulesTitle": "登录规则",
+    "loginRules": [
+      "<strong>用户名</strong> — 必填，不能为空",
+      "<strong>密码</strong> — 必填，不能为空"
+    ],
+    "registerRulesTitle": "注册规则",
+    "registerRules": [
+      "<strong>用户名</strong> — 必填，不能为空",
+      "<strong>密码</strong> — 必填，至少 4 位",
+      "<strong>身份证号</strong> — 必填，不能为空"
+    ],
+    "form": {
+      "username": "用户名",
+      "password": "密码",
+      "idNumber": "身份证号",
+      "loginSubmit": "登录",
+      "registerSubmit": "注册",
+      "loading": "加载中...",
+      "back": "← 返回",
+      "noAccount": "还没有账号？",
+      "hasAccount": "已有账号？",
+      "registerHere": "注册",
+      "loginHere": "登录"
+    },
+    "errors": {
+      "fillFields": "请填写用户名和密码",
+      "fillAll": "请填写用户名、密码和身份证号",
+      "passwordShort": "密码至少 4 位",
+      "invalidCredentials": "用户名或密码错误",
+      "usernameTaken": "用户名已存在",
+      "loginFailed": "登录失败，请稍后重试",
+      "registerFailed": "注册失败，请稍后重试"
+    }
+  },
+  "userProfile": {
+    "welcome": "欢迎, {username}!",
+    "logout": "登出"
+  },
+  "pages": {
+    "feed": {
+      "title": "Feed",
+      "placeholder": "你的 Feed — 帖子、标签、关注等内容将在这里显示。"
+    },
+    "chat": {
+      "title": "Chat",
+      "placeholder": "你的消息和群组将在这里显示 "
+    },
+    "justify": {
+      "title": "Justify",
+      "placeholder": "Justify 版块 — 即将上线。"
+    },
+    "explore": {
+      "title": "Explore",
+      "placeholder": "探索版块 — 发现新的内容和人。"
+    },
+    "back": "← 返回首页"
+  },
+  "navOptions": {
+    "feed": "Feed",
+    "chat": "Chat",
+    "justify": "Justify",
+    "explore": "Explore"
+  }
+}

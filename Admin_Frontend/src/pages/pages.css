@@ -27,7 +27,7 @@
 }
 
 .back-btn::before {
-    content: "← Back";
+    content: "Back";
 }
 
 .back-btn:hover {
