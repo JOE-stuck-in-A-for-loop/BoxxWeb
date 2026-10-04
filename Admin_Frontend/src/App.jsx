@@ -7,10 +7,11 @@ import GuestInformation from './home_userProfile/guest_information.jsx';
 import HomeOptions from './home_options/home_options.jsx';
 import LangSwitcher from './langSwitcher.jsx';
 
-import FeedPage from './pages/FeedPage.jsx';
+import FeedPage from './pages/feed/FeedPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
 import JustifyPage from './pages/JustifyPage.jsx';
 import ExplorePage from './pages/ExplorePage.jsx';
+import PostEditor from './pages/editor/PostEditor.jsx';
 
 function App() {
   useEffect(() => {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/justify" element={<JustifyPage />} />
         <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/admin/editor" element={<PostEditor />} />
       </Routes>
     </Background>
   );

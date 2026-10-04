@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@types/three": "^0.186.0",
+    "grapesjs": "^0.23.6",
+    "grapesjs-blocks-basic": "^1.0.2",
+    "grapesjs-preset-webpage": "^1.0.3",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.4",

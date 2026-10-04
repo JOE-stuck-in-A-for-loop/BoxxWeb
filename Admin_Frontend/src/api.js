@@ -55,4 +55,28 @@ export function getMe() {
   return request('/me');
 }
 
-export default { login, getMe };
+/**
+ * 获取所有 bubbles（已发布的帖子）
+ */
+export function getBubbles() {
+  return request('/bubbles');
+}
+
+/**
+ * 获取单个 bubble
+ */
+export function getBubble(id) {
+  return request(`/bubbles/${id}`);
+}
+
+/**
+ * 创建新的 bubble
+ */
+export function createBubble(title, htmlContent) {
+  return request('/bubbles', {
+    method: 'POST',
+    body: JSON.stringify({ title, html_content: htmlContent }),
+  });
+}
+
+export default { login, getMe, getBubbles, getBubble, createBubble };

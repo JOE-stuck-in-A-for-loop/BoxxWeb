@@ -1,0 +1,119 @@
+.editor-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background: #f0f2f5;
+}
+
+/* ── Top bar ── */
+.editor-topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.editor-back-btn {
+    padding: 8px 18px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.85);
+    color: #1F3A5F;
+    transition: all 0.2s;
+    min-width: 70px;
+    text-align: center;
+}
+.editor-back-btn:hover {
+    border-color: rgba(31, 58, 95, 0.2);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.editor-title-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.editor-title-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 16px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.2s;
+    text-align: center;
+}
+.editor-title-input:focus {
+    border-color: #1565c0;
+}
+
+.editor-publish-btn {
+    padding: 10px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #1565c0, #1e88e5);
+    color: #fff;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+.editor-publish-btn:hover {
+    opacity: 0.9;
+}
+.editor-publish-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ── Main editor area ── */
+.editor-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ── Left: Blocks panel ── */
+.editor-blocks {
+    width: 220px;
+    background: #fff;
+    border-right: 1px solid #e0e0e0;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+/* ── Center: Canvas ── */
+.editor-canvas {
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ── Right: Style manager ── */
+.editor-style {
+    width: 260px;
+    background: #fff;
+    border-left: 1px solid #e0e0e0;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.editor-style-handle {
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}

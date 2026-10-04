@@ -23,7 +23,7 @@ if not SECRET_KEY:
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 1440  # 24 hours
 
-# Automatically generate the boxx_data.db file and the users table
+# Automatically generate the boxx_data.db file and all tables
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -31,7 +31,7 @@ security = HTTPBearer()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173", "http://localhost:5174"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -65,27 +65,23 @@ def get_current_user(token: HTTPAuthorizationCredentials = Depends(security), db
         raise HTTPException(status_code=401, detail="User not found")
     return db_user
 
+
+# ── Auth endpoints ──
+
 @app.post("/register", response_model=schemas.UserResponse)
 def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    # 1. Check if the username is already taken
     db_user = crud.get_user_by_username(db, username=user.username)
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registered")
-
-    # 2. Create the user in the database and return the safe UserResponse
     return crud.create_user(db=db, user=user)
 
 @app.post("/login")
 def login_user(user: schemas.UserLogin, db: Session = Depends(get_db)):
-    # 1. retrieve the user by username
     db_user = crud.get_user_by_username(db, username=user.username)
     if not db_user:
         raise HTTPException(status_code=400, detail="Invalid username")
-    # 2. Verify the password using bcrypt
     if not verify_password(user.password, db_user.hashed_password):
         raise HTTPException(status_code=400, detail="Invalid password")
-
-    # 3. Create JWT token and return it
     access_token = create_access_token(data={"sub": user.username})
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -96,3 +92,47 @@ def get_me(current_user: models.User = Depends(get_current_user)):
 @app.get("/")
 def read_root():
     return {"message": "Hello from FastAPI! The backend is running."}
+
+
+# ── Bubble endpoints ──
+
+@app.post("/bubbles", response_model=schemas.BubbleResponse)
+def create_bubble(
+    bubble: schemas.BubbleCreate,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    return crud.create_bubble(db=db, bubble=bubble, author_id=current_user.id)
+
+
+@app.get("/bubbles", response_model=list[schemas.BubbleResponse])
+def list_bubbles(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    bubbles = crud.get_bubbles(db, skip=skip, limit=limit)
+    # Attach author_name for convenience
+    result = []
+    for b in bubbles:
+        resp = schemas.BubbleResponse(
+            id=b.id,
+            title=b.title,
+            html_content=b.html_content,
+            author_id=b.author_id,
+            author_name=b.author.username if b.author else None,
+            created_at=b.created_at,
+        )
+        result.append(resp)
+    return result
+
+
+@app.get("/bubbles/{bubble_id}", response_model=schemas.BubbleResponse)
+def get_bubble(bubble_id: int, db: Session = Depends(get_db)):
+    bubble = crud.get_bubble(db, bubble_id=bubble_id)
+    if not bubble:
+        raise HTTPException(status_code=404, detail="Bubble not found")
+    return schemas.BubbleResponse(
+        id=bubble.id,
+        title=bubble.title,
+        html_content=bubble.html_content,
+        author_id=bubble.author_id,
+        author_name=bubble.author.username if bubble.author else None,
+        created_at=bubble.created_at,
+    )
