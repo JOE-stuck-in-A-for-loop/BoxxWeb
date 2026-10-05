@@ -7,6 +7,7 @@ from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 import os
 import uuid
+from pathlib import Path
 from dotenv import load_dotenv
 
 import crud
@@ -29,12 +30,14 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 1440  # 24 hours
 models.Base.metadata.create_all(bind=engine)
 
 # ── Static files & uploads ──
-UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+BASE_DIR = Path(__file__).parent
+UPLOAD_DIR = BASE_DIR / "uploads"
+UPLOAD_DIR.mkdir(exist_ok=True)
+
 app = FastAPI()
 security = HTTPBearer()
 
-app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
+app.mount("/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 
 app.add_middleware(
     CORSMiddleware,
@@ -111,18 +114,25 @@ async def upload_file(file: UploadFile = File(...)):
     if ext not in ALLOWED_EXTENSIONS:
         raise HTTPException(status_code=400, detail=f"File type '{ext}' not allowed")
 
-    # Generate unique filename to avoid conflicts
-    unique_name = f"{uuid.uuid4().hex}{ext}"
-    file_path = os.path.join(UPLOAD_DIR, unique_name)
+    # Date-based folder: uploads/2026/10/
+    now = datetime.now(timezone.utc)
+    year_str = str(now.year)
+    month_str = f"{now.month:02d}"
+    date_dir = UPLOAD_DIR / year_str / month_str
+    date_dir.mkdir(parents=True, exist_ok=True)
+
+    # Generate unique filename: uuid4_originalname.ext
+    stem = Path(file.filename).stem
+    unique_name = f"{uuid.uuid4().hex}_{stem}{ext}"
+    file_path = date_dir / unique_name
 
     # Save the file
     content = await file.read()
-    with open(file_path, "wb") as f:
-        f.write(content)
+    file_path.write_bytes(content)
 
     # Return the URL path that GrapesJS can use
-    url = f"/uploads/{unique_name}"
-    return {"url": url, "filename": unique_name}
+    url = f"/uploads/{year_str}/{month_str}/{unique_name}"
+    return {"url": url, "filename": f"{year_str}/{month_str}/{unique_name}"}
 
 
 # ── Bubble endpoints ──
