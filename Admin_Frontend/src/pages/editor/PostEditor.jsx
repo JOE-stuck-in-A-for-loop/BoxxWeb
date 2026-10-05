@@ -9,6 +9,8 @@ import 'grapesjs/dist/css/grapes.min.css';
 import '../pages.css';
 import './postEditor.css';
 
+const API_BASE = '/api';
+
 function PostEditor() {
   const do_navigate = useNavigate();
   const { isAuthenticated, loading } = useAuth();
@@ -24,6 +26,28 @@ function PostEditor() {
       do_navigate('/');
     }
   }, [loading, isAuthenticated, do_navigate]);
+
+  // Upload file to backend
+  async function uploadFile(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const token = localStorage.getItem('boxx_token');
+    const res = await fetch(`${API_BASE}/upload`, {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Upload failed');
+    }
+
+    const data = await res.json();
+    // Return absolute URL for GrapesJS
+    return `http://localhost:8000${data.url}`;
+  }
 
   // Initialize GrapesJS once
   useEffect(() => {
@@ -58,6 +82,34 @@ function PostEditor() {
         styles: [
           'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
         ],
+      },
+      // ── Asset manager with custom upload ──
+      assetManager: {
+        upload: true,
+        autoAdd: true,
+        uploadName: 'file',
+        multiUpload: true,
+        // Custom upload handler — uploads to our backend
+        uploadFile: async function (e) {
+          const files = e.dataTransfer
+            ? e.dataTransfer.files
+            : e.target && e.target.files
+              ? e.target.files
+              : [];
+
+          for (const file of files) {
+            try {
+              const url = await uploadFile(file);
+              // Add the uploaded asset to GrapesJS asset manager
+              editor.AssetManager.add({ src: url, name: file.name, type: file.type });
+              // Also add it as a modal asset (shows in the asset manager modal)
+              editor.AssetManager.add(url);
+            } catch (err) {
+              console.error('Upload failed:', err);
+              alert('Upload failed: ' + err.message);
+            }
+          }
+        },
       },
       styleManager: {
         appendTo: '#gjs-style',

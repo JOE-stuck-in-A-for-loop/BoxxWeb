@@ -1,10 +1,12 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 import os
+import uuid
 from dotenv import load_dotenv
 
 import crud
@@ -26,8 +28,13 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 1440  # 24 hours
 # Automatically generate the boxx_data.db file and all tables
 models.Base.metadata.create_all(bind=engine)
 
+# ── Static files & uploads ──
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 app = FastAPI()
 security = HTTPBearer()
+
+app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
 app.add_middleware(
     CORSMiddleware,
@@ -92,6 +99,30 @@ def get_me(current_user: models.User = Depends(get_current_user)):
 @app.get("/")
 def read_root():
     return {"message": "Hello from FastAPI! The backend is running."}
+
+
+# ── File upload endpoint ──
+
+ALLOWED_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.mp4', '.webm', '.ogg', '.mov'}
+
+@app.post("/upload")
+async def upload_file(file: UploadFile = File(...)):
+    ext = os.path.splitext(file.filename)[1].lower()
+    if ext not in ALLOWED_EXTENSIONS:
+        raise HTTPException(status_code=400, detail=f"File type '{ext}' not allowed")
+
+    # Generate unique filename to avoid conflicts
+    unique_name = f"{uuid.uuid4().hex}{ext}"
+    file_path = os.path.join(UPLOAD_DIR, unique_name)
+
+    # Save the file
+    content = await file.read()
+    with open(file_path, "wb") as f:
+        f.write(content)
+
+    # Return the URL path that GrapesJS can use
+    url = f"/uploads/{unique_name}"
+    return {"url": url, "filename": unique_name}
 
 
 # ── Bubble endpoints ──

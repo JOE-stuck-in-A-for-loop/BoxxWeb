@@ -11,6 +11,7 @@ import FeedPage from './pages/FeedPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
 import JustifyPage from './pages/JustifyPage.jsx';
 import ExplorePage from './pages/ExplorePage.jsx';
+import BubbleView from './pages/BubbleView.jsx';
 
 function App() {
   useEffect(() => {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/justify" element={<JustifyPage />} />
         <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/bubble/:id" element={<BubbleView />} />
       </Routes>
     </Background>
   );
