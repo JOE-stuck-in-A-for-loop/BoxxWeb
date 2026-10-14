@@ -49,6 +49,13 @@ function FeedPage() {
                                 <span className="bubble-date">
                                     {new Date(bubble.created_at).toLocaleDateString()}
                                 </span>
+                                {bubble.tags && bubble.tags.length > 0 && (
+                                    <div className="bubble-tags" style={{ marginLeft: 'auto', display: 'flex', gap: 4 }}>
+                                        {bubble.tags.map((tag) => (
+                                            <span key={tag} className="bubble-tag-pill">{t('tags.' + tag)}</span>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}

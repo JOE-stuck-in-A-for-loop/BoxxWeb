@@ -13,13 +13,17 @@
       "Click any bubble to read the full content",
       "New bubbles published by the Boxx team appear here"
     ],
-    "welcomeTitle": "Explore",
-    "welcomeDesc": "Dive into bubbles created by the Boxx team. All content is free to browse."
+    "welcomeTitle": "About Boxx",
+    "welcomeDesc": "Welcome to a cleaner, clearer way to explore ideas. Here, you get completely free, open, and unfiltered information without the noise. There are no algorithms trapping you in an information cocoon, no misinformation, no malicious personal attacks, no discrimination or bullying, no mindless chatter, no false hype, and no malicious manipulation. You can browse all of this content on the Feed page, where you will find different \"bubbles\" posted by various content creators. Every piece of information here is true, real, and meant for genuine sharing. Let's keep things nice, friendly, and helpful."
   },
   "pages": {
     "feed": {
       "title": "Feed",
       "placeholder": "Your feed will appear here — posts, tags, following, and more."
+    },
+    "contact": {
+      "title": "Contact",
+      "qq": "Contact us: QQ Group xxxxxxxx"
     },
     "chat": {
       "title": "Chat",
@@ -35,8 +39,17 @@
     },
     "back": "← Back to Home"
   },
+  "tags": {
+    "title": "Tags",
+    "all": "All",
+    "程序": "Coding",
+    "金融": "Finance",
+    "英文": "English",
+    "自我": "Self"
+  },
   "navOptions": {
     "feed": "Feed",
+    "contact": "Contact",
     "chat": "Chat",
     "justify": "Justify",
     "explore": "Explore"

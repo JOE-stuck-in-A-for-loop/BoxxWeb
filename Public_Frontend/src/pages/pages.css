@@ -18,12 +18,13 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(0, 0, 0, 0);
     backdrop-filter: blur(4px);
     color: #1F3A5F;
-    transition: all 0.2s;
+    transition: all 0.5s;
     min-width: 70px;
     text-align: center;
+    
 }
 
 .back-btn::before {

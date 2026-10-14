@@ -57,9 +57,11 @@ export function getMe() {
 
 /**
  * 获取所有 bubbles（公开展示的帖子）
+ * @param {string} [tag] - Optional tag filter
  */
-export function getBubbles() {
-  return request('/bubbles');
+export function getBubbles(tag) {
+  const params = tag ? `?tag=${encodeURIComponent(tag)}` : '';
+  return request(`/bubbles${params}`);
 }
 
 /**

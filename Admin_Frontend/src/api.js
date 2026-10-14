@@ -72,10 +72,10 @@ export function getBubble(id) {
 /**
  * 创建新的 bubble
  */
-export function createBubble(title, htmlContent) {
+export function createBubble(title, htmlContent, tags = []) {
   return request('/bubbles', {
     method: 'POST',
-    body: JSON.stringify({ title, html_content: htmlContent }),
+    body: JSON.stringify({ title, html_content: htmlContent, tags }),
   });
 }
 

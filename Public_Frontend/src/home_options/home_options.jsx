@@ -9,7 +9,7 @@ function HomeOptions() {
     return (
         <div className="home_options">
             <button className="opt-btn feed" onClick={() => do_navigate('/feed')}>{t('navOptions.feed')}</button>
-            <button className="opt-btn chat" onClick={() => do_navigate('/chat')}>{t('navOptions.chat')}</button>
+            <button className="opt-btn chat" onClick={() => do_navigate('/contact')}>{t('navOptions.contact')}</button>
             <button className="opt-btn justify" onClick={() => do_navigate('/justify')}>{t('navOptions.justify')}</button>
             <button className="opt-btn explore" onClick={() => do_navigate('/explore')}>{t('navOptions.explore')}</button>
         </div>

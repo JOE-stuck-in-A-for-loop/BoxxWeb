@@ -34,6 +34,10 @@
       "title": "Feed",
       "placeholder": "Your feed will appear here — posts, tags, following, and more."
     },
+    "contact": {
+      "title": "Contact",
+      "qq": "Contact us: QQ Group xxxxxxxx"
+    },
     "chat": {
       "title": "Chat",
       "placeholder": "Your messages and groups will appear here "
@@ -48,8 +52,17 @@
     },
     "back": "← Back to Home"
   },
+  "tags": {
+    "title": "Tags",
+    "all": "All",
+    "程序": "Coding",
+    "金融": "Finance",
+    "英文": "English",
+    "自我": "Self"
+  },
   "navOptions": {
     "feed": "Feed",
+    "contact": "Contact",
     "chat": "Chat",
     "justify": "Justify",
     "explore": "Explore"

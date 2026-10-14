@@ -19,6 +19,15 @@ function PostEditor() {
   const editorInstance = useRef(null);
   const [title, setTitle] = useState('');
   const [publishing, setPublishing] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const ALL_TAGS = ['程序', '金融', '英文', '自我'];
+
+  function toggleTag(tag) {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  }
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -316,7 +325,7 @@ function PostEditor() {
       const html = editor.getHtml();
       const css = editor.getCss();
       const fullHtml = `<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}</body></html>`;
-      await createBubble(title, fullHtml);
+      await createBubble(title, fullHtml, selectedTags);
       do_navigate('/feed');
     } catch (err) {
       alert('Failed to publish: ' + (err.message || 'Unknown error'));
@@ -348,6 +357,20 @@ function PostEditor() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+        </div>
+        {/* Tag selector */}
+        <div className="editor-tags-row">
+          {ALL_TAGS.map((tag) => (
+            <label key={tag} className={`editor-tag-label${selectedTags.includes(tag) ? ' active' : ''}`}>
+              <input
+                type="checkbox"
+                checked={selectedTags.includes(tag)}
+                onChange={() => toggleTag(tag)}
+                style={{ display: 'none' }}
+              />
+              {t('tags.' + tag)}
+            </label>
+          ))}
         </div>
         <button
           className="editor-publish-btn"

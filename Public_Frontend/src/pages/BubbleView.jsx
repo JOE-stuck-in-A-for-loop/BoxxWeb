@@ -46,10 +46,32 @@ function BubbleView() {
                 <h1 style={{ margin: '0 0 8px 0', fontSize: 32, color: '#1a237e' }}>
                     {bubble.title}
                 </h1>
-                <div style={{ display: 'flex', gap: 16, fontSize: 14, color: '#888', marginBottom: 32 }}>
+                <div style={{ display: 'flex', gap: 16, fontSize: 14, color: '#888', marginBottom: 8 }}>
                     <span style={{ color: '#1565c0', fontWeight: 500 }}>{bubble.author_name}</span>
                     <span>{new Date(bubble.created_at).toLocaleDateString()}</span>
                 </div>
+
+                {/* Tags */}
+                {bubble.tags && bubble.tags.length > 0 && (
+                    <div style={{ display: 'flex', gap: 6, marginBottom: 24 }}>
+                        {bubble.tags.map((tag) => (
+                            <span
+                                key={tag}
+                                style={{
+                                    display: 'inline-block',
+                                    padding: '3px 10px',
+                                    borderRadius: 8,
+                                    fontSize: 12,
+                                    fontWeight: 500,
+                                    background: '#e3f2fd',
+                                    color: '#1565c0',
+                                }}
+                            >
+                                {t('tags.' + tag)}
+                            </span>
+                        ))}
+                    </div>
+                )}
 
                 {/* Rendered bubble content */}
                 <div

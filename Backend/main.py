@@ -5,6 +5,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
+import json
 import os
 import uuid
 from pathlib import Path
@@ -18,6 +19,11 @@ from crud import get_password_hash, verify_password, get_user_by_username
 
 # Load .env file
 load_dotenv()
+
+# ── Public URL (for building absolute URLs to uploaded files) ──
+PUBLIC_URL = os.getenv("PUBLIC_URL", "").rstrip("/")
+# In dev, if no PUBLIC_URL is set, we'll return relative URLs (Vite proxy handles them)
+# In production, set PUBLIC_URL=https://yourdomain.com
 
 # JWT settings
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -131,8 +137,13 @@ async def upload_file(file: UploadFile = File(...)):
     file_path.write_bytes(content)
 
     # Return the URL path that GrapesJS can use
-    url = f"/uploads/{year_str}/{month_str}/{unique_name}"
-    return {"url": url, "filename": f"{year_str}/{month_str}/{unique_name}"}
+    url_path = f"/uploads/{year_str}/{month_str}/{unique_name}"
+    # If PUBLIC_URL is configured, return an absolute URL
+    if PUBLIC_URL:
+        file_url = f"{PUBLIC_URL}{url_path}"
+    else:
+        file_url = url_path  # relative — works with Vite proxy in dev
+    return {"url": file_url, "filename": f"{year_str}/{month_str}/{unique_name}"}
 
 
 # ── Bubble endpoints ──
@@ -147,8 +158,8 @@ def create_bubble(
 
 
 @app.get("/bubbles", response_model=list[schemas.BubbleResponse])
-def list_bubbles(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    bubbles = crud.get_bubbles(db, skip=skip, limit=limit)
+def list_bubbles(skip: int = 0, limit: int = 100, tag: str = None, db: Session = Depends(get_db)):
+    bubbles = crud.get_bubbles(db, skip=skip, limit=limit, tag=tag)
     # Attach author_name for convenience
     result = []
     for b in bubbles:
@@ -156,6 +167,7 @@ def list_bubbles(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
             id=b.id,
             title=b.title,
             html_content=b.html_content,
+            tags=json.loads(b.tags) if b.tags else [],
             author_id=b.author_id,
             author_name=b.author.username if b.author else None,
             created_at=b.created_at,
@@ -173,6 +185,7 @@ def get_bubble(bubble_id: int, db: Session = Depends(get_db)):
         id=bubble.id,
         title=bubble.title,
         html_content=bubble.html_content,
+        tags=json.loads(bubble.tags) if bubble.tags else [],
         author_id=bubble.author_id,
         author_name=bubble.author.username if bubble.author else None,
         created_at=bubble.created_at,

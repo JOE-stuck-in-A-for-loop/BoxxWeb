@@ -1,3 +1,4 @@
+import json
 from sqlalchemy.orm import Session
 import bcrypt
 import hashlib
@@ -46,6 +47,7 @@ def create_bubble(db: Session, bubble: schemas.BubbleCreate, author_id: int):
     db_bubble = models.Bubble(
         title=bubble.title,
         html_content=bubble.html_content,
+        tags=json.dumps(bubble.tags, ensure_ascii=False),
         author_id=author_id,
     )
     db.add(db_bubble)
@@ -54,14 +56,12 @@ def create_bubble(db: Session, bubble: schemas.BubbleCreate, author_id: int):
     return db_bubble
 
 
-def get_bubbles(db: Session, skip: int = 0, limit: int = 100):
-    return (
-        db.query(models.Bubble)
-        .order_by(models.Bubble.created_at.desc())
-        .offset(skip)
-        .limit(limit)
-        .all()
-    )
+def get_bubbles(db: Session, skip: int = 0, limit: int = 100, tag: str = None):
+    query = db.query(models.Bubble).order_by(models.Bubble.created_at.desc())
+    if tag:
+        # Filter bubbles whose JSON tags array contains the given tag
+        query = query.filter(models.Bubble.tags.contains(tag))
+    return query.offset(skip).limit(limit).all()
 
 
 def get_bubble(db: Session, bubble_id: int):

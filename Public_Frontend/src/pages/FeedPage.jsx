@@ -3,25 +3,51 @@ import { useNavigate } from 'react-router-dom';
 import { useI18n } from '../i18n';
 import { getBubbles } from '../api';
 import './pages.css';
+import './feedPage.css';
+
+const ALL_TAGS = ['程序', '金融', '英文', '自我'];
 
 function FeedPage() {
     const do_navigate = useNavigate();
     const { t } = useI18n();
     const [bubbles, setBubbles] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [activeTag, setActiveTag] = useState(null);
 
     useEffect(() => {
-        getBubbles()
+        setLoading(true);
+        getBubbles(activeTag)
             .then(setBubbles)
             .catch(() => {})
             .finally(() => setLoading(false));
-    }, []);
+    }, [activeTag]);
 
     return (
-        <div className="page-container">
+        <div className="page-container feed-layout">
             <button className="back-btn" onClick={() => do_navigate('/')}></button>
 
-            <div className="page-card" style={{ maxWidth: 720 }}>
+            {/* Left: Tag sidebar */}
+            <div className="feed-tag-sidebar">
+                <div className="feed-tag-title">{t('tags.title')}</div>
+                <button
+                    className={`feed-tag-btn${activeTag === null ? ' active' : ''}`}
+                    onClick={() => setActiveTag(null)}
+                >
+                    {t('tags.all')}
+                </button>
+                {ALL_TAGS.map((tag) => (
+                    <button
+                        key={tag}
+                        className={`feed-tag-btn${activeTag === tag ? ' active' : ''}`}
+                        onClick={() => setActiveTag(tag === activeTag ? null : tag)}
+                    >
+                        {t('tags.' + tag)}
+                    </button>
+                ))}
+            </div>
+
+            {/* Right: Content */}
+            <div className="page-card feed-content-area" style={{ maxWidth: 720 }}>
                 <h1>{t('pages.feed.title')}</h1>
 
                 {loading && <p className="page-placeholder">{t('guestInfo.form.loading')}</p>}
@@ -57,9 +83,16 @@ function FeedPage() {
                             <h3 style={{ margin: '0 0 8px 0', fontSize: 19, fontWeight: 600, color: '#1a237e' }}>
                                 {bubble.title}
                             </h3>
-                            <div style={{ display: 'flex', gap: 16, fontSize: 13, color: '#888' }}>
+                            <div style={{ display: 'flex', gap: 16, fontSize: 13, color: '#888', alignItems: 'center' }}>
                                 <span style={{ fontWeight: 500, color: '#1565c0' }}>{bubble.author_name}</span>
                                 <span>{new Date(bubble.created_at).toLocaleDateString()}</span>
+                                {bubble.tags && bubble.tags.length > 0 && (
+                                    <div style={{ display: 'flex', gap: 4, marginLeft: 'auto' }}>
+                                        {bubble.tags.map((tag) => (
+                                            <span key={tag} className="feed-bubble-tag">{t('tags.' + tag)}</span>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}

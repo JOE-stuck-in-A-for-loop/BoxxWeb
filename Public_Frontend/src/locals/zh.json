@@ -13,13 +13,17 @@
       "点击任意气泡即可阅读完整内容",
       "Boxx 团队发布的新气泡会在此展示"
     ],
-    "welcomeTitle": "探索",
-    "welcomeDesc": "探索 Boxx 团队创作的气泡。所有内容均可自由浏览。"
+    "welcomeTitle": "关于 Boxx",
+    "welcomeDesc": "欢迎来到一个更清新、更明晰的探索空间。这里为您提供完全免费、干净且真实的资讯，告别“信息茧房”、虚假信息、恶意人身攻击、歧视与霸凌、无意义的闲聊、虚假炒作以及恶意操控。您可以在“Feed”页面浏览这些内容，里面有内容创作者发布的各种“气泡”。请放心，这里的所有信息都是真实、客观且真诚分享的。让我们共同保持友好、温暖与互助的社区氛围。"
   },
   "pages": {
     "feed": {
       "title": "Feed",
       "placeholder": "你的 Feed — 帖子、标签、关注等内容将在这里显示。"
+    },
+    "contact": {
+      "title": "联系方式",
+      "qq": "联系我们：QQ群 xxxxxxxx"
     },
     "chat": {
       "title": "Chat",
@@ -35,8 +39,17 @@
     },
     "back": "← 返回首页"
   },
+  "tags": {
+    "title": "标签",
+    "all": "全部",
+    "程序": "程序",
+    "金融": "金融",
+    "英文": "英文",
+    "自我": "自我"
+  },
   "navOptions": {
     "feed": "Feed",
+    "contact": "联系",
     "chat": "Chat",
     "justify": "Justify",
     "explore": "Explore"

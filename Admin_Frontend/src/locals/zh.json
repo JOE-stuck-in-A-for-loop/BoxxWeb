@@ -34,6 +34,10 @@
       "title": "Feed",
       "placeholder": "你的 Feed — 帖子、标签、关注等内容将在这里显示。"
     },
+    "contact": {
+      "title": "联系方式",
+      "qq": "联系我们：QQ群 xxxxxxxx"
+    },
     "chat": {
       "title": "Chat",
       "placeholder": "你的消息和群组将在这里显示 "
@@ -48,8 +52,17 @@
     },
     "back": "← 返回首页"
   },
+  "tags": {
+    "title": "标签",
+    "all": "全部",
+    "程序": "程序",
+    "金融": "金融",
+    "英文": "英文",
+    "自我": "自我"
+  },
   "navOptions": {
     "feed": "Feed",
+    "contact": "联系",
     "chat": "Chat",
     "justify": "Justify",
     "explore": "Explore"

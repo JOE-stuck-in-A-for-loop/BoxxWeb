@@ -26,11 +26,13 @@ class UserLogin(BaseModel):
 class BubbleCreate(BaseModel):
     title: str
     html_content: str
+    tags: list[str] = []
 
 class BubbleResponse(BaseModel):
     id: int
     title: str
     html_content: str
+    tags: list[str] = []
     author_id: int
     author_name: Optional[str] = None
     created_at: datetime

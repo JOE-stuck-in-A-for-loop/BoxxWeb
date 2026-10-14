@@ -1,0 +1,75 @@
+/* ── Feed layout: sidebar + content ── */
+.feed-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+    padding-top: 80px;
+    min-height: 100vh;
+}
+
+/* ── Left tag sidebar ── */
+.feed-tag-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 80px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 80px;
+}
+
+.feed-tag-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.feed-tag-btn {
+    width: 60px;
+    padding: 8px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(4px);
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+}
+
+.feed-tag-btn:hover {
+    border-color: #1565c0;
+    color: #1565c0;
+    background: rgba(255,255,255,0.9);
+}
+
+.feed-tag-btn.active {
+    background: #1565c0;
+    color: #fff;
+    border-color: #1565c0;
+}
+
+/* ── Bubble card tag pills ── */
+.feed-bubble-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+/* responsiveness: hide sidebar on very small screens */
+@media (max-width: 640px) {
+    .feed-tag-sidebar {
+        display: none;
+    }
+}

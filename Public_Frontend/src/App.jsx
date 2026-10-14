@@ -35,7 +35,7 @@ function App() {
           </>
         } />
         <Route path="/feed" element={<FeedPage />} />
-        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/contact" element={<ChatPage />} />
         <Route path="/justify" element={<JustifyPage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/bubble/:id" element={<BubbleView />} />

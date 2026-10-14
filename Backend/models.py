@@ -20,6 +20,7 @@ class Bubble(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     html_content = Column(Text)
+    tags = Column(Text, default="[]")  # JSON array: ["程序","金融"]
     author_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
