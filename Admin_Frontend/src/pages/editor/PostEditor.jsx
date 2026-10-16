@@ -10,6 +10,7 @@ import '../pages.css';
 import './postEditor.css';
 
 const API_BASE = '/api';
+const DRAFT_KEY = 'boxx_editor_draft';
 
 function PostEditor() {
   const do_navigate = useNavigate();
@@ -28,6 +29,73 @@ function PostEditor() {
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
   }
+
+  // ── Draft save / restore ──
+  const [draftStatus, setDraftStatus] = useState(''); // '' | 'saved' | 'restored'
+
+  // Use refs to avoid stale closures in the interval
+  const titleRef = useRef(title);
+  titleRef.current = title;
+  const tagsRef = useRef(selectedTags);
+  tagsRef.current = selectedTags;
+  const lastSavedRef = useRef('');
+
+  function saveDraft() {
+    try {
+      const editor = editorInstance.current;
+      if (!editor) return;
+      const html = editor.getHtml();
+      const css = editor.getCss();
+      const state = JSON.stringify({
+        title: titleRef.current,
+        html,
+        css,
+        tags: tagsRef.current,
+        savedAt: Date.now(),
+      });
+      if (state === lastSavedRef.current) return; // no change
+      localStorage.setItem(DRAFT_KEY, state);
+      lastSavedRef.current = state;
+      setDraftStatus('saved');
+    } catch (e) {
+      // Silently ignore — draft save must never block editing
+    }
+  }
+
+  function restoreDraft() {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      setTitle(draft.title || '');
+      setSelectedTags(draft.tags || []);
+      const editor = editorInstance.current;
+      if (editor && (draft.html || draft.css)) {
+        editor.setComponents(draft.html || '');
+        if (draft.css) editor.setStyle(draft.css);
+      }
+      setDraftStatus('restored');
+    } catch (e) {
+      localStorage.removeItem(DRAFT_KEY);
+    }
+  }
+
+  function clearDraft() {
+    localStorage.removeItem(DRAFT_KEY);
+    lastSavedRef.current = '';
+    setDraftStatus('');
+  }
+
+  // Auto-save draft every 5 seconds (once editor is initialized)
+  useEffect(() => {
+    const id = setInterval(saveDraft, 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Save draft when leaving the page
+  useEffect(() => {
+    return () => { saveDraft(); };
+  }, []);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -272,6 +340,9 @@ function PostEditor() {
     editorInstance.current = editor;
     editorRef.current = editor;
 
+    // Restore draft if one exists
+    restoreDraft();
+
     return () => {
       editor.destroy();
       editorInstance.current = null;
@@ -290,6 +361,7 @@ function PostEditor() {
       const css = editor.getCss();
       const fullHtml = `<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}</body></html>`;
       await createBubble(title, fullHtml, selectedTags);
+      clearDraft(); // Remove draft after successful publish
       do_navigate('/feed');
     } catch (err) {
       alert('Failed to publish: ' + (err.message || 'Unknown error'));
@@ -343,6 +415,17 @@ function PostEditor() {
         >
           {publishing ? 'Publishing...' : 'Publish Bubble'}
         </button>
+        {draftStatus === 'saved' && (
+          <span className="editor-draft-indicator">💾 {t('editor.draftSaved')}</span>
+        )}
+        {draftStatus === 'restored' && (
+          <span className="editor-draft-indicator draft-restored">
+            📄 {t('editor.draftRestored')}
+            <button className="editor-discard-draft-btn" onClick={clearDraft}>
+              ✕
+            </button>
+          </span>
+        )}
       </div>
 
       {/* Main editor area */}

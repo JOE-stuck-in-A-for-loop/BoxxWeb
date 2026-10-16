@@ -60,6 +60,10 @@
     "英文": "英文",
     "自我": "自我"
   },
+  "editor": {
+    "draftSaved": "草稿已自动保存",
+    "draftRestored": "草稿已恢复"
+  },
   "navOptions": {
     "feed": "Feed",
     "contact": "联系",
