@@ -15,7 +15,7 @@ import PostEditor from './pages/editor/PostEditor.jsx';
 
 function App() {
   useEffect(() => {
-    fetch("http://47.102.43.26:8000/")
+    fetch("http://127.0.0.1:8000/")
       .then(res => res.json())
       .then(data => console.log("成功连接！后端说:", data))
       .catch(err => console.error("连接失败:", err));

@@ -47,7 +47,7 @@ app.mount("/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://47.102.43.26:8080", "http://47.102.43.26:8081"],
+    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173", "http://127.0.0.1:5174", "http://47.102.43.26:8080", "http://47.102.43.26:8081"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -154,7 +154,17 @@ def create_bubble(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
-    return crud.create_bubble(db=db, bubble=bubble, author_id=current_user.id)
+    db_bubble = crud.create_bubble(db=db, bubble=bubble, author_id=current_user.id)
+    # Deserialize tags for response (Pydantic v2 needs list, not JSON string)
+    return schemas.BubbleResponse(
+        id=db_bubble.id,
+        title=db_bubble.title,
+        html_content=db_bubble.html_content,
+        tags=json.loads(db_bubble.tags) if db_bubble.tags else [],
+        author_id=db_bubble.author_id,
+        author_name=db_bubble.author.username if db_bubble.author else None,
+        created_at=db_bubble.created_at,
+    )
 
 
 @app.get("/bubbles", response_model=list[schemas.BubbleResponse])
