@@ -27,7 +27,13 @@ async function request(url, options = {}) {
   // 处理 204 No Content
   if (res.status === 204) return null;
 
-  const data = await res.json();
+  // Try to parse JSON; fall back to status text if it fails
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = { detail: res.statusText || `HTTP ${res.status}` };
+  }
 
   if (!res.ok) {
     const error = new Error(data.detail || '请求失败');

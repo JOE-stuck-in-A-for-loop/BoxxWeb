@@ -45,9 +45,19 @@ security = HTTPBearer()
 
 app.mount("/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 
+# ── CORS: allow all in dev, restrict in production ──
+# Set CORS_ORIGINS env var to a comma-separated list for production
+# Example: CORS_ORIGINS=http://example.com,https://example.com
+CORS_ORIGINS_ENV = os.getenv("CORS_ORIGINS", "")
+if CORS_ORIGINS_ENV:
+    origins = [o.strip() for o in CORS_ORIGINS_ENV.split(",") if o.strip()]
+else:
+    # Dev defaults
+    origins = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173", "http://127.0.0.1:5174", "http://47.102.43.26:8080", "http://47.102.43.26:8081"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -15,10 +15,10 @@ import BubbleView from './pages/BubbleView.jsx';
 
 function App() {
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/")
+    fetch("/api/")
       .then(res => res.json())
-      .then(data => console.log("成功连接！后端说:", data))
-      .catch(err => console.error("连接失败:", err));
+      .then(data => console.log("✅ 后端连接成功:", data))
+      .catch(err => console.error("❌ 后端连接失败:", err));
   }, []);
 
   return (
