@@ -39,7 +39,7 @@ function BubbleView() {
     }
 
     return (
-        <div className="page-container" style={{ flexDirection: 'column', alignItems: 'stretch', padding: '80px 20px 40px' }}>
+        <div className="page-container" style={{ flexDirection: 'column', alignItems: 'stretch', padding: '80px 20px 80px' }}>
             <button className="back-btn" onClick={() => do_navigate('/feed')}></button>
 
             <div style={{ maxWidth: 800, margin: '0 auto', width: '100%' }}>

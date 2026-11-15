@@ -40,6 +40,54 @@ function App() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/bubble/:id" element={<BubbleView />} />
       </Routes>
+
+      {/* ⚖️ 法律信息 — fixed 底部叠加，不占用文档流 */}
+      <footer style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        textAlign: 'center',
+        padding: '10px 20px',
+        fontSize: '13px',
+        color: 'rgba(255,255,255,0.65)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '4px',
+        background: 'linear-gradient(transparent, rgba(0,0,0,0.35))',
+        pointerEvents: 'auto',
+      }}>
+        <a
+          href="https://beian.miit.gov.cn/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'rgba(255,255,255,0.65)', textDecoration: 'none' }}
+        >
+          冀ICP备2026045455号-1
+        </a>
+
+        <a
+          href="https://beian.mps.gov.cn/#/query/webSearch?code=13053202001862"
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            color: 'rgba(255,255,255,0.65)',
+            textDecoration: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '4px',
+          }}
+        >
+          <img
+            src="/gongan.png"
+            style={{ width: '14px', height: '14px' }}
+            alt="公安备案"
+          />
+          冀公网安备13053202001862号
+        </a>
+      </footer>
     </Background>
   );
 }
