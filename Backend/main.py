@@ -177,22 +177,27 @@ def create_bubble(
     )
 
 
-@app.get("/bubbles", response_model=list[schemas.BubbleResponse])
-def list_bubbles(skip: int = 0, limit: int = 100, tag: str = None, db: Session = Depends(get_db)):
+@app.get("/bubbles", response_model=list[schemas.BubbleSummary])
+def list_bubbles(
+    skip: int = 0,
+    limit: int = 100,
+    tag: str = None,
+    db: Session = Depends(get_db),
+):
     bubbles = crud.get_bubbles(db, skip=skip, limit=limit, tag=tag)
-    # Attach author_name for convenience
+
     result = []
     for b in bubbles:
-        resp = schemas.BubbleResponse(
+        summary = schemas.BubbleSummary(
             id=b.id,
             title=b.title,
-            html_content=b.html_content,
             tags=json.loads(b.tags) if b.tags else [],
             author_id=b.author_id,
             author_name=b.author.username if b.author else None,
             created_at=b.created_at,
         )
-        result.append(resp)
+        result.append(summary)
+
     return result
 
 

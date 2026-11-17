@@ -1,5 +1,5 @@
 import json
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, defer
 import bcrypt
 import hashlib
 import models
@@ -57,12 +57,14 @@ def create_bubble(db: Session, bubble: schemas.BubbleCreate, author_id: int):
 
 
 def get_bubbles(db: Session, skip: int = 0, limit: int = 100, tag: str = None):
-    query = db.query(models.Bubble).order_by(models.Bubble.created_at.desc())
+    query = (
+        db.query(models.Bubble)
+        .options(defer(models.Bubble.html_content))
+        .order_by(models.Bubble.created_at.desc())
+    )
     if tag:
-        # Filter bubbles whose JSON tags array contains the given tag
         query = query.filter(models.Bubble.tags.contains(tag))
     return query.offset(skip).limit(limit).all()
-
 
 def get_bubble(db: Session, bubble_id: int):
     return db.query(models.Bubble).filter(models.Bubble.id == bubble_id).first()
